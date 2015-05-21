@@ -540,7 +540,7 @@
 
             <entry><itemizedlist>
                 <listitem>
-                  <para>Overconstrained planning</para>
+                  <para><link linkend="overconstrainedPlanning">Overconstrained planning</link></para>
                 </listitem>
               </itemizedlist></entry>
           </row>
@@ -1630,7 +1630,7 @@ Schedule B-10 has 20 projects, 460 jobs, 1300 execution modes, 42 resources and 
         in the hospital. Each bed belongs to a room and each room belongs to a department. The arrival and departure
         dates of the patients is fixed: only a bed needs to be assigned for each night.</para>
 
-        <para>This problem features <emphasis>overconstrained</emphasis> datasets.</para>
+        <para>This problem features <link linkend="overconstrainedPlanning">overconstrained</link> datasets.</para>
 
         <mediaobject>
           <imageobject>
@@ -1722,6 +1722,15 @@ testdata10 has 4 specialisms, 4 equipments, 4 departments, 104 rooms, 308 beds, 
 testdata11 has 4 specialisms, 4 equipments, 4 departments, 107 rooms, 318 beds, 91 nights, 2514 patients and 2514 admissions with a search space of 10^6291.
 testdata12 has 4 specialisms, 4 equipments, 4 departments, 105 rooms, 310 beds, 84 nights, 2750 patients and 2750 admissions with a search space of 10^6851.
 testdata13 has 5 specialisms, 4 equipments, 5 departments, 125 rooms, 368 beds, 28 nights,  907 patients and 1109 admissions with a search space of 10^2845.</programlisting>
+      </section>
+      <section xml:id="bedAllocationDomainModel">
+        <title>Domain Model</title>
+
+        <mediaobject>
+          <imageobject>
+            <imagedata fileref="images/Chapter-Use_cases_and_examples/hospitalBedAllocationClassDiagram.png"/>
+          </imageobject>
+        </mediaobject>
       </section>
     </section>
   </section>
@@ -1878,6 +1887,96 @@ exam_comp_set8 has  7718 students,  598 exams, 80 periods,  8 rooms,  20 period 
           </imageobject>
         </mediaobject>
 
+        <para>Hard constraints:</para>
+
+        <itemizedlist>
+          <listitem>
+            <para><emphasis role="bold">No unassigned shifts</emphasis> (build-in): Every shift need to be assigned to
+            an employee.</para>
+          </listitem>
+
+          <listitem>
+            <para><emphasis role="bold">Shift conflict</emphasis>: An employee can have only 1 shift per day.</para>
+          </listitem>
+        </itemizedlist>
+
+        <para>Soft constraints:</para>
+
+        <itemizedlist>
+          <listitem>
+            <para>Contract obligations. The business frequently violates these, so they decided to define these as soft
+            constraints instead of hard constraints.</para>
+
+            <itemizedlist>
+              <listitem>
+                <para><emphasis role="bold">Minimum and maximum assignments</emphasis>: Each employee needs to work more
+                than x shifts and less than y shifts (depending on their contract).</para>
+              </listitem>
+
+              <listitem>
+                <para><emphasis role="bold">Minimum and maximum consecutive working days</emphasis>: Each employee needs
+                to work between x and y days in a row (depending on their contract).</para>
+              </listitem>
+
+              <listitem>
+                <para><emphasis role="bold">Minimum and maximum consecutive free days</emphasis>: Each employee needs to
+                be free between x and y days in a row (depending on their contract).</para>
+              </listitem>
+
+              <listitem>
+                <para><emphasis role="bold">Minimum and maximum consecutive working weekends</emphasis>: Each employee
+                needs to work between x and y weekends in a row (depending on their contract).</para>
+              </listitem>
+
+              <listitem>
+                <para><emphasis role="bold">Complete weekends</emphasis>: Each employee needs to work every day in a
+                weekend or not at all.</para>
+              </listitem>
+
+              <listitem>
+                <para><emphasis role="bold">Identical shift types during weekend</emphasis>: Each weekend shift for the
+                same weekend of the same employee must be the same shift type.</para>
+              </listitem>
+
+              <listitem>
+                <para><emphasis role="bold">Unwanted patterns</emphasis>: A combination of unwanted shift types in a
+                row. For example: a late shift followed by an early shift followed by a late shift.</para>
+              </listitem>
+            </itemizedlist>
+          </listitem>
+
+          <listitem>
+            <para>Employee wishes:</para>
+
+            <itemizedlist>
+              <listitem>
+                <para><emphasis role="bold">Day on request</emphasis>: An employee wants to work on a specific
+                day.</para>
+              </listitem>
+
+              <listitem>
+                <para><emphasis role="bold">Day off request</emphasis>: An employee does not want to work on a specific
+                day.</para>
+              </listitem>
+
+              <listitem>
+                <para><emphasis role="bold">Shift on request</emphasis>: An employee wants to be assigned to a specific
+                shift.</para>
+              </listitem>
+
+              <listitem>
+                <para><emphasis role="bold">Shift off request</emphasis>: An employee does not want to be assigned to a
+                specific shift.</para>
+              </listitem>
+            </itemizedlist>
+          </listitem>
+
+          <listitem>
+            <para><emphasis role="bold">Alternative skill</emphasis>: An employee assigned to a skill should have a
+            proficiency in every skill required by that shift.</para>
+          </listitem>
+        </itemizedlist>
+
         <mediaobject>
           <imageobject>
             <imagedata fileref="images/Chapter-Use_cases_and_examples/employeeShiftRosteringHardConstraints.png"/>
@@ -1967,6 +2066,16 @@ long_late02   has 2 skills, 5 shiftTypes, 9 patterns, 4 contracts, 50 employees,
 long_late03   has 2 skills, 5 shiftTypes, 9 patterns, 3 contracts, 50 employees, 28 shiftDates, 752 shiftAssignments and   0 requests with a search space of 10^1277.
 long_late04   has 2 skills, 5 shiftTypes, 9 patterns, 4 contracts, 50 employees, 28 shiftDates, 752 shiftAssignments and   0 requests with a search space of 10^1277.
 long_late05   has 2 skills, 5 shiftTypes, 9 patterns, 3 contracts, 50 employees, 28 shiftDates, 740 shiftAssignments and   0 requests with a search space of 10^1257.</programlisting>
+      </section>
+
+      <section xml:id="employeeRosteringDomainModel">
+        <title>Domain Model</title>
+
+        <mediaobject>
+          <imageobject>
+            <imagedata fileref="images/Chapter-Use_cases_and_examples/employeeShiftRosteringClassDiagram.png"/>
+          </imageobject>
+        </mediaobject>
       </section>
     </section>
 

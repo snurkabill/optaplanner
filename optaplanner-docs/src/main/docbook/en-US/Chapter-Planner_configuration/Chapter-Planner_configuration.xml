@@ -131,9 +131,9 @@
       <programlisting language="java">        SolverFactory solverFactory = SolverFactory.createFromXmlResource(
                 "org/optaplanner/examples/nqueens/solver/nqueensSolverConfig.xml");
 
-        SolverConfig solverConfig = solverFactory.getSolverConfig();
-        TerminationConfig terminationConfig = solverConfig.getTerminationConfig();
+        TerminationConfig terminationConfig = new TerminationConfig();
         terminationConfig.setMinutesSpentLimit(userInput);
+        solverFactory.getSolverConfig().setTerminationConfig(terminationConfig);
 
         Solver solver = solverFactory.buildSolver();</programlisting>
 
@@ -809,7 +809,7 @@ public class NQueens implements Solution&lt;SimpleScore&gt; {
 
         <itemizedlist>
           <listitem>
-            <para>Directly points to a planning fact, which is called an <emphasis>anchor</emphasis>.</para>
+            <para>Directly points to a problem fact (or planning entity), which is called an <emphasis>anchor</emphasis>.</para>
           </listitem>
 
           <listitem>
