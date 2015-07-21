@@ -36,7 +36,7 @@ global HardSoftLongScoreHolder scoreHolder;
 // Hard constraints
 // ############################################################################
 
-rule "coachStopLimit"
+/*rule "coachStopLimit"
     when
         $coach : Coach($stopLimit : stopLimit)
         $stopTotal : Number(intValue > $stopLimit) from accumulate(
@@ -74,7 +74,10 @@ rule "coachCapacity"
         eval($coachPassengerQuantityTotal.intValue() + $shuttlePassengerQuantityTotal.intValue() > $capacity)
     then
         scoreHolder.addHardConstraintMatch(kcontext, ($capacity - $coachPassengerQuantityTotal.intValue() - $shuttlePassengerQuantityTotal.intValue()) * 1000L);
-end
+end*/
+
+// ---------- aaaaaaaaaaaaaaaaaaaaaaaaaaaaa
+
 
 rule "transportTime"
     when
@@ -83,19 +86,19 @@ rule "transportTime"
         scoreHolder.addHardConstraintMatch(kcontext, $cost);
 end
 
-rule "shuttleDestinationIsCoachOrHub"
+/*rule "shuttleDestinationIsCoachOrHub"
     when
         Shuttle(destination != null, $destination : destination)
         StopOrHub(this == $destination, visitedByCoach == false)
     then
         scoreHolder.addHardConstraintMatch(kcontext, - 1000000000L);
-end
+end*/
 
 // ############################################################################
 // Soft constraints
 // ############################################################################
 
-rule "shuttleSetupCost"
+/*rule "shuttleSetupCost"
     when
         Bus(nextStop != null, $cost : setupCost)
     then
@@ -123,3 +126,4 @@ rule "distanceCoachDirectlyToDestination"
     then
         scoreHolder.addSoftConstraintMatch(kcontext, - $cost);
 end
+*/

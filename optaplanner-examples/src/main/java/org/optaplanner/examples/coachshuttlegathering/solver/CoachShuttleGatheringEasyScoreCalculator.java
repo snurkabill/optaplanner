@@ -16,19 +16,16 @@
 
 package org.optaplanner.examples.coachshuttlegathering.solver;
 
-import java.util.HashMap;
-import java.util.LinkedHashMap;
-import java.util.List;
-import java.util.Map;
-
 import org.optaplanner.core.api.score.buildin.hardsoftlong.HardSoftLongScore;
 import org.optaplanner.core.impl.score.director.easy.EasyScoreCalculator;
 import org.optaplanner.examples.coachshuttlegathering.domain.Bus;
 import org.optaplanner.examples.coachshuttlegathering.domain.BusStop;
 import org.optaplanner.examples.coachshuttlegathering.domain.Coach;
 import org.optaplanner.examples.coachshuttlegathering.domain.CoachShuttleGatheringSolution;
-import org.optaplanner.examples.coachshuttlegathering.domain.Shuttle;
-import org.optaplanner.examples.coachshuttlegathering.domain.StopOrHub;
+
+import java.util.LinkedHashMap;
+import java.util.List;
+import java.util.Map;
 
 public class CoachShuttleGatheringEasyScoreCalculator implements EasyScoreCalculator<CoachShuttleGatheringSolution> {
 
@@ -40,7 +37,7 @@ public class CoachShuttleGatheringEasyScoreCalculator implements EasyScoreCalcul
         Map<Coach, Integer> coachToStopCountMap = new LinkedHashMap<Coach, Integer>(busList.size());
         for (BusStop stop : solution.getStopList()) {
             Bus bus = stop.getBus();
-            if (bus != null) {
+            /*if (bus != null) {
                 // Constraint shuttleCapacity and coachCapacity
                 Integer passengerTotal = busToPassengerTotalMap.get(bus);
                 if (passengerTotal == null) {
@@ -70,22 +67,22 @@ public class CoachShuttleGatheringEasyScoreCalculator implements EasyScoreCalcul
                     stopCount = (stopCount == null) ? 1 : stopCount + 1;
                     coachToStopCountMap.put(coach, stopCount);
                 }
-            }
+            }*/
             // Constraint transportTime
             Integer transportTimeRemainder = stop.getTransportTimeRemainder();
             if (transportTimeRemainder != null && transportTimeRemainder < 0) {
                 hardScore += transportTimeRemainder;
             }
-            // Constraint distanceFromPrevious
+           /* // Constraint distanceFromPrevious
             if (stop.getPreviousBusOrStop() != null) {
                 softScore -= stop.getDistanceFromPreviousCost();
             }
             // Constraint distanceBusStopToBusDestination
             if (stop.getNextStop() == null && bus != null && bus.getDestination() != null) {
                 softScore -= stop.getDistanceToDestinationCost(bus.getDestination());
-            }
+            }*/
         }
-        for (Bus bus : busList) {
+        /*for (Bus bus : busList) {
             // Constraint shuttleCapacity and coachCapacity
             Integer passengerTotal = busToPassengerTotalMap.get(bus);
             if (passengerTotal != null && passengerTotal > bus.getCapacity()) {
@@ -118,7 +115,7 @@ public class CoachShuttleGatheringEasyScoreCalculator implements EasyScoreCalcul
                     softScore -= shuttle.getSetupCost();
                 }
             }
-        }
+        }*/
         return HardSoftLongScore.valueOf(hardScore, softScore);
     }
 
